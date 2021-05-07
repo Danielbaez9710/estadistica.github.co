@@ -1,0 +1,264 @@
+---
+title: "Tutorial R"
+author: 
+- "2182028-Jorge Luis Sandoval Anaya"
+- "otro"
+date: May 06, 2021
+output:
+ prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+# 1.Estuctura de control
+Se utilizan para controlar el flujo del programas en una rutina o funcion.Estas estructuras permiten controlar,mediante una condicion,la ejecucion o no de una linea de codigo o conjunto de lineas.
+Las siguientes estructuras de control son las mas conocidas y usadas de R.
+
+|Estructura de control|Descripcion|
+|---|---|
+|if|(si) es usado cuando deseamos que una operación se ejecute únicamente cuando una condición se cumple.|
+|else|sirve para indicar instrucciones a realizar en caso de no cumplirse la condición del if.|
+|for|nos permite ejecutar un bucle (loop), realizando una operación para cada elemento de un conjunto de datos.|
+|while|Este es un tipo de bucle que ocurre mientras una condición es verdadera (TRUE). La operación se realiza hasta que se se llega a cumplir un criterio previamente establecido.|
+|break|nos permite interrumpir un bucle|
+|next|nos deja avanzar a la siguiente iteración del bucle.|
+|repeat|Este es un bucle que se llevará a cabo el número de veces que especifiquemos.|
+
+# 2. Listas y vectores
+Un vector es la estructura de datos más sencilla en R. Un vector es una colección de uno o más datos del mismo tipo,es decir es una estructura homogenea.
+
+### 2.1 Creacion de vectores
+Para crear un vector debemos usar la funcion c() (combinar) y darle como argumento los elementos que deseamos combinar en el vector,separados por comas.
+
+###   Ejemplo
+```{r}
+#Vector numerico
+c(100,3456,4578,899)
+```
+
+
+```{r}
+#vector de texto
+c("Estadistica","Moda","Mediana","Media")
+```
+
+Si se desea agregar un dato a un vector ya existente,lo podemos hacer combinando dicho vector con el nuevo dato.
+```{r}
+vector_ejemplo <- c(1,2,3,4,5,6)
+vector_ejemplo <- c(vector_ejemplo,7)
+vector_ejemplo
+```
+Asi mismo se puede crear un vector con la combinacion de dos ya existentes.
+```{r}
+Ejemplo1 <- c(100,200,300)
+Ejemplo2 <- c(400,500,600)
+Ejemplo3 <- c(Ejemplo1,Ejemplo2)
+Ejemplo3
+
+```
+Al intentar realizar la combinacion de vectores que tienen tipos de datos diferentes,R realiza coercion automaticamente dando origen a un  vector del tipo de dato mas flexible segun las reglas de coercion.
+
+```{r}
+class(Ejemplo3)
+```
+ahora se agregara un dato de tipo de cadena de texto y se vera en uso las reglas de coercion.
+```{r}
+class(c(Ejemplo3,"Estadistica"))
+```
+Tambien pordemos crear vectores con secuencias numericas utilizando ```:```. En el lado izquierdo de los dos puntos se coloca el numero(decimal,negativo o positivo) de inicio de dicha secuencia y en el lado derecho escribimos donde finalizara. 
+```{r}
+#secuencia inicia en 10 y va hasta a 3
+c(10:34)
+```
+En R existen operaciones aritmetica y relacionales que podemos aplicar a cada dato de un vector,a este proceso se le llama vectorizacion.  
+
+
+```{r}
+#suma
+Ejemplo3+5
+```
+```{r}
+#multiplicacion
+Ejemplo3*8
+```
+```{r}
+#divicion
+Ejemplo3/2
+```
+
+Al aplicar operaciones relacionales se obtiene un vector logico para cada uno de los elementos comparados
+
+```{r}
+#numeros mayor de 200
+Ejemplo3>200
+```
+```{r}
+#numeros menor de 200
+Ejemplo3<200
+```
+```{r}
+#numeros igual a 200
+Ejemplo3==200
+```
+
+### 2.2 Listas
+Las listas, al igual que los vectores, son estructuras de datos unidimensionales, sólo tienen largo, pero a diferencia de los vectores cada uno de sus elementos puede ser de diferente tipo o incluso de diferente clase, por lo que son estructuras heterogéneas.
+
+### 2.21 Creacion de listas
+Para crear una lista es necesario usar la funcion ```list()```,la cual nos pidira como argumentos los elemtos que deseamos incluir en la nueva lista.Para esta estructura, no importan las dimensiones o largo de los elementos que queramos incluir en ella.
+
+### Ejemplo
+```{r}
+#vector de 1 a 10
+vector <- 1:10
+#matriz 
+matriz <- matrix(1:6, nrow=3)
+lista <- list("vector"=vector,"matriz"=matriz)
+lista
+```
+
+# 3.Funciones
+Para crear funciones en R debemos utilizar el comando ```function()``` con el cual se creara objetos de tipo function de la siguiente manera.
+
+```
+f <- function(<argumentos>)
+{
+    ## codigo de la funcion 
+}
+```
+
+ Cuando le asignamos una funcion a un nombre decimos que hemos definido una funcion.
+ 
+ 
+Una vez que la función tiene nombre, podemos llamarla usando su nombre, al igua lque con las funciones por defecto de R.
+
+```{r}
+f <- function(){
+  cat("Hola mundo")
+  
+}
+#llamando la funcion f
+f()
+```
+Toda funcion esta compuesta de 3 partes las cuales veremos a continuacion.
+
+|Parte|Descripcion|
+|---|---|
+|Nombre|Nos permite ejecutar  y hacer referencia sobre una funcion|
+|Argumentos|Son la variables que necesitan las funciones para poder realizar sus operaciones|
+|Cuerpo|Contiene todas las operaciones que se ejecutaran cuando la funcion sea llamada|
+
+
+# 4. Distribuciones de probabilidad en R
+
+A cada nombre de probabilidad dado por R se le agrega  un prefijo ```d``` para obtener la funcion de densidad,```p``` para la funcion de distribucion acumulada  y ```q``` para la funcion cuantil.La sintaxis de lo anterior es la siguiente.
+
+```
+ dname(x,.....) #evalua la funcion de densidad
+ pname(x,.....) #evalua la funcion de distribucion
+ qname(x,.....) #evalua la funcion cuantil
+```
+## Distribucion Beta
+
+### Funcion de densidad
+```{r}
+ curve(dbeta(x, shape1=1, shape2=5), lwd=3, las=1,
+      ylab='Densidad')
+```
+
+### Funcion de distribucion acumulada
+```{r}
+curve(pbeta(x, shape1=1, shape2=5),lwd=3,las=1,
+      ylab='D acumulada')
+```
+
+### Funcion cuantil
+```{r}
+curve(qbeta(x, shape1=1, shape2=5),lwd=3,las=1,
+      ylab='F Cuartil')
+```
+
+## Distribucion normal
+
+
+### Funcion de densidad
+```{r}
+ curve(dnorm(x, mean = 0, sd=1), lwd=3, las=1,
+      ylab='Densidad')
+```
+
+### Funcion de distribucion acumulada
+```{r}
+curve(pnorm(x, mean = 0, sd=1),lwd=3,las=1,
+      ylab='D acumulada')
+```
+
+### Funcion cuantil
+```{r}
+curve(qnorm(x, mean = 0, sd=1),lwd=3,las=1,
+      ylab='F Cuartil')
+```
+
+## Distribucion binomial
+
+### Funcion de densidad
+```{r}
+x <- seq(0,50,by=1)#secuencia de 50 numeros ordenados
+bin <- dbinom(x,size=50,prob=0.5)
+plot(x,bin)
+
+```
+
+### Funcion de distribucion acumulada
+```{r}
+x <- seq(0,50,by=1)#secuencia de 50 numeros ordenados
+bin <- pbinom(x,size=50,prob=0.5)
+plot(x,bin)
+
+```
+
+### Funcion cuantil
+
+```{r}
+qbinom(0.25,51,1/2)
+
+```
+
+## Distribucion de poisson
+
+### Funcion de densidad
+
+```{r}
+x <- 1:50
+plot(dpois(x,lambda = 5))
+```
+
+
+### Funcion de distribucion acumulada
+
+```{r}
+x <- 1:50
+y <- ppois(x,lambda = 5)
+plot(x,y)
+
+```
+
+### Funcion cuantil
+
+```{r}
+qpois(p=0.90,lambda=10)
+
+```
+
+# 5 xd
+```{r}
+```
+
+# 6
+```{r}
+enlace <- 'https://raw.githubusercontent.com/georsan/U/main/Estadistica/abalone.txt'
+datos <- read.table(file=enlace, header=TRUE,sep = ",")
+datos
+```
+
